@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import shortid from 'shortid';
 import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons';
 
 import DropdownAddToDo from './components/DropdownAddToDo';
 import TodoList from './components/TodoList';
@@ -15,6 +15,7 @@ const App = () => {
   const [todos, setTodos] = useState(initialTodos);
   const [filter, setFilter] = useState('');
   const [selectedTodos, setSelectedTodos] = useState([]);
+  const [editingTodoId, setEditingTodoId] = useState(null);
 
   useEffect(() => {
     const storedTodos = localStorage.getItem('todos');
@@ -33,7 +34,7 @@ const App = () => {
       id: shortid.generate(),
       text,
       completed: false,
-      createdAt: new Date().toLocaleString(), // Дата создания
+      createdAt: new Date().toLocaleString(),
     };
 
     setTodos([todo, ...todos]);
@@ -70,9 +71,27 @@ const App = () => {
         selectedTodo => selectedTodo.id !== todo.id
       );
       setSelectedTodos(updatedSelectedTodos);
+      setEditingTodoId(null);
     } else {
-      setSelectedTodos([...selectedTodos, todo]);
+      setSelectedTodos([todo]);
     }
+  };
+
+  const handleEditTodo = todoId => {
+    setEditingTodoId(todoId);
+  };
+
+  const handleSaveEdit = (todoId, newText) => {
+    setTodos(prevTodos =>
+      prevTodos.map(todo =>
+        todo.id === todoId ? { ...todo, text: newText } : todo
+      )
+    );
+    setEditingTodoId(null);
+  };
+
+  const handleCancelEdit = () => {
+    setEditingTodoId(null);
   };
 
   const filteredTodos = todos.filter(todo =>
@@ -94,9 +113,22 @@ const App = () => {
         <FontAwesomeIcon icon={faTrashAlt} />
       </button>
 
+      <button
+        type="button"
+        className={classNames('TodoList__btn', {
+          'TodoList__btn--active':
+            selectedTodos.length === 1 && editingTodoId === null,
+        })}
+        onClick={() => handleEditTodo(selectedTodos[0].id)}
+        disabled={selectedTodos.length !== 1 || editingTodoId !== null}
+      >
+        <FontAwesomeIcon icon={faEdit} />
+      </button>
+
       <DropdownAddToDo>
         <TodoEditor onSubmit={addTodo} />
       </DropdownAddToDo>
+
       <TodoList
         todos={filteredTodos}
         onDeleteTodo={deleteTodo}
@@ -104,6 +136,9 @@ const App = () => {
         selectedTodos={selectedTodos}
         handleTodoClick={handleTodoClick}
         handleDeleteTodo={handleDeleteTodo}
+        editingTodoId={editingTodoId}
+        handleSaveEdit={handleSaveEdit}
+        handleCancelEdit={handleCancelEdit}
       />
     </>
   );

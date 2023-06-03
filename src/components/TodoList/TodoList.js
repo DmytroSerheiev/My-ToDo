@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames';
 import './TodoList.css';
 
@@ -9,7 +9,28 @@ const TodoList = ({
   selectedTodos,
   handleTodoClick,
   handleDeleteTodo,
+  handleEditTodo,
+  editingTodoId,
+  handleSaveEdit,
+  handleCancelEdit,
 }) => {
+  const [editedText, setEditedText] = useState('');
+
+  const handleTextChange = event => {
+    setEditedText(event.target.value);
+  };
+
+  const handleKeyPress = event => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      setEditedText(editedText + '\n');
+    }
+  };
+
+  const handleSave = () => {
+    handleSaveEdit(editingTodoId, editedText.trim());
+  };
+
   return (
     <ul className="TodoList">
       {todos.map(({ id, text, completed, createdAt }) => (
@@ -28,30 +49,51 @@ const TodoList = ({
             checked={completed}
             onChange={() => onToggleCompleted(id)}
           />
-          <p
-            className={classNames('TodoList__text', {
-              'TodoList__text--selected': selectedTodos.some(
-                selectedTodo => selectedTodo.id === id
-              ),
-            })}
-            onClick={() => handleTodoClick({ id, text, completed })}
-          >
-            {text}
-          </p>
-          <p className="TodoList__createdAt">Created at: {createdAt}</p>{' '}
-          {/* Дата создания */}
+          {editingTodoId === id ? (
+            <div className="TodoList__editContainer">
+              <textarea
+                className="TodoList__editInput"
+                value={editedText}
+                onChange={handleTextChange}
+                onKeyDown={handleKeyPress}
+              />
+              <div className="TodoList__editButtons">
+                <button className="TodoList__editButton" onClick={handleSave}>
+                  Сохранить
+                </button>
+                <button
+                  className="TodoList__editButton"
+                  onClick={handleCancelEdit}
+                >
+                  Отмена
+                </button>
+              </div>
+            </div>
+          ) : (
+            <p
+              className={classNames('TodoList__text', {
+                'TodoList__text--selected': selectedTodos.some(
+                  selectedTodo => selectedTodo.id === id
+                ),
+              })}
+              onClick={() => handleTodoClick({ id, text, completed })}
+            >
+              {text}
+            </p>
+          )}
+          <p className="TodoList__createdAt">Created at: {createdAt}</p>
         </li>
       ))}
-      {/* {selectedTodos.length > 0 && (
+      {/* {selectedTodos.length === 1 && (
         <button
           type="button"
           className={classNames('TodoList__btn', {
             'TodoList__btn--active': selectedTodos.length > 0,
           })}
-          onClick={handleDeleteTodo}
-          disabled={selectedTodos.length === 0}
+          onClick={() => handleEditTodo(selectedTodos[0].id)}
+          disabled={selectedTodos.length !== 1 || editingTodoId !== null}
         >
-          Удалить
+          Редактировать
         </button>
       )} */}
     </ul>
