@@ -12,7 +12,7 @@ const TodoList = ({
 }) => {
   return (
     <ul className="TodoList">
-      {todos.map(({ id, text, completed }) => (
+      {todos.map(({ id, text, completed, createdAt }) => (
         <li
           key={id}
           className={classNames('TodoList__item', {
@@ -38,15 +38,17 @@ const TodoList = ({
           >
             {text}
           </p>
+          <p className="TodoList__createdAt">Created at: {createdAt}</p>{' '}
+          {/* Дата создания */}
         </li>
       ))}
       {/* {selectedTodos.length > 0 && (
         <button
           type="button"
-          className={classNames("TodoList__btn", {
-            "TodoList__btn--active": selectedTodos.length > 0,
+          className={classNames('TodoList__btn', {
+            'TodoList__btn--active': selectedTodos.length > 0,
           })}
-          onClick={handleDeleteTodo} // Update this line
+          onClick={handleDeleteTodo}
           disabled={selectedTodos.length === 0}
         >
           Удалить

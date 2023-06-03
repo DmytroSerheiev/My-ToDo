@@ -91,3 +91,12 @@ li {
 .TodoList__btn--active svg {
   fill: #ff0000;
 }
+.TodoList__createdAt {
+  color: #888;
+  font-size: 12px;
+}
+.TodoList__createdAt {
+  font-size: 12px;
+  color: #999;
+  margin-top: 4px;
+}

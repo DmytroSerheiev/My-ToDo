@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from "react";
-import shortid from "shortid";
-import classNames from "classnames";
+import React, { useState, useEffect } from 'react';
+import shortid from 'shortid';
+import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
-import DropdownAddToDo from "./components/DropdownAddToDo";
-import TodoList from "./components/TodoList";
-import initialTodos from "./todos.json";
-import Filter from "./components/Filter";
+import DropdownAddToDo from './components/DropdownAddToDo';
+import TodoList from './components/TodoList';
+import initialTodos from './todos.json';
+import Filter from './components/Filter';
 
-import TodoEditor from "./components/TodoEditor";
+import TodoEditor from './components/TodoEditor';
 
 const App = () => {
   const [todos, setTodos] = useState(initialTodos);
-  const [filter, setFilter] = useState("");
+  const [filter, setFilter] = useState('');
   const [selectedTodos, setSelectedTodos] = useState([]);
 
   useEffect(() => {
-    const storedTodos = localStorage.getItem("todos");
+    const storedTodos = localStorage.getItem('todos');
 
     if (storedTodos) {
       setTodos(JSON.parse(storedTodos));
@@ -25,48 +25,49 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("todos", JSON.stringify(todos));
+    localStorage.setItem('todos', JSON.stringify(todos));
   }, [todos]);
 
-  const addTodo = (text) => {
+  const addTodo = text => {
     const todo = {
       id: shortid.generate(),
       text,
       completed: false,
+      createdAt: new Date().toLocaleString(), // Дата создания
     };
 
     setTodos([todo, ...todos]);
   };
 
-  const deleteTodo = (todoIds) => {
-    const updatedTodos = todos.filter((todo) => !todoIds.includes(todo.id));
+  const deleteTodo = todoIds => {
+    const updatedTodos = todos.filter(todo => !todoIds.includes(todo.id));
     setTodos(updatedTodos);
   };
 
-  const toggleCompleted = (todoId) => {
-    setTodos((prevTodos) =>
-      prevTodos.map((todo) =>
+  const toggleCompleted = todoId => {
+    setTodos(prevTodos =>
+      prevTodos.map(todo =>
         todo.id === todoId ? { ...todo, completed: !todo.completed } : todo
       )
     );
   };
 
-  const handleFilterChange = (event) => {
+  const handleFilterChange = event => {
     setFilter(event.target.value);
   };
 
   const handleDeleteTodo = () => {
-    deleteTodo(selectedTodos.map((selectedTodo) => selectedTodo.id));
+    deleteTodo(selectedTodos.map(selectedTodo => selectedTodo.id));
     setSelectedTodos([]);
   };
 
-  const handleTodoClick = (todo) => {
+  const handleTodoClick = todo => {
     const isSelected = selectedTodos.some(
-      (selectedTodo) => selectedTodo.id === todo.id
+      selectedTodo => selectedTodo.id === todo.id
     );
     if (isSelected) {
       const updatedSelectedTodos = selectedTodos.filter(
-        (selectedTodo) => selectedTodo.id !== todo.id
+        selectedTodo => selectedTodo.id !== todo.id
       );
       setSelectedTodos(updatedSelectedTodos);
     } else {
@@ -74,7 +75,7 @@ const App = () => {
     }
   };
 
-  const filteredTodos = todos.filter((todo) =>
+  const filteredTodos = todos.filter(todo =>
     todo.text.toLowerCase().includes(filter.toLowerCase())
   );
 
@@ -84,8 +85,8 @@ const App = () => {
 
       <button
         type="button"
-        className={classNames("TodoList__btn", {
-          "TodoList__btn--active": selectedTodos.length > 0,
+        className={classNames('TodoList__btn', {
+          'TodoList__btn--active': selectedTodos.length > 0,
         })}
         onClick={handleDeleteTodo}
         disabled={selectedTodos.length === 0}
