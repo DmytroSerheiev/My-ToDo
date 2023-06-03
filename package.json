@@ -2,7 +2,7 @@
   "name": "React-Test-Task-ToDo",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://https://dmytroserheiev.github.io/My-ToDo/",
+  "homepage": "https://dmytroserheiev.github.io/My-ToDo/",
   "dependencies": {
     "@csstools/normalize.css": "^12.0.0",
     "@fortawesome/free-solid-svg-icons": "^6.2.0",
