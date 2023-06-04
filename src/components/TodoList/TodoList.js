@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 import './TodoList.css';
 
@@ -11,26 +11,12 @@ const TodoList = ({
   handleDeleteTodo,
   handleEditTodo,
   editingTodoId,
-  handleSaveEdit,
+  handleTextChange,
+  handleKeyPress,
+  handleSave,
   handleCancelEdit,
+  editedText,
 }) => {
-  const [editedText, setEditedText] = useState('');
-
-  const handleTextChange = event => {
-    setEditedText(event.target.value);
-  };
-
-  const handleKeyPress = event => {
-    if (event.key === 'Enter') {
-      event.preventDefault();
-      setEditedText(editedText + '\n');
-    }
-  };
-
-  const handleSave = () => {
-    handleSaveEdit(editingTodoId, editedText.trim());
-  };
-
   return (
     <ul className="TodoList">
       {todos.map(({ id, text, completed, createdAt }) => (
@@ -84,18 +70,6 @@ const TodoList = ({
           <p className="TodoList__createdAt">Created at: {createdAt}</p>
         </li>
       ))}
-      {/* {selectedTodos.length === 1 && (
-        <button
-          type="button"
-          className={classNames('TodoList__btn', {
-            'TodoList__btn--active': selectedTodos.length > 0,
-          })}
-          onClick={() => handleEditTodo(selectedTodos[0].id)}
-          disabled={selectedTodos.length !== 1 || editingTodoId !== null}
-        >
-          Редактировать
-        </button>
-      )} */}
     </ul>
   );
 };

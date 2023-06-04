@@ -78,7 +78,9 @@ const App = () => {
   };
 
   const handleEditTodo = todoId => {
+    const selectedTodo = todos.find(todo => todo.id === todoId);
     setEditingTodoId(todoId);
+    setEditedText(selectedTodo.text);
   };
 
   const handleSaveEdit = (todoId, newText) => {
@@ -97,6 +99,23 @@ const App = () => {
   const filteredTodos = todos.filter(todo =>
     todo.text.toLowerCase().includes(filter.toLowerCase())
   );
+
+  const [editedText, setEditedText] = useState('');
+
+  const handleTextChange = event => {
+    setEditedText(event.target.value);
+  };
+
+  const handleKeyPress = event => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      setEditedText(editedText + '\n');
+    }
+  };
+
+  const handleSave = () => {
+    handleSaveEdit(editingTodoId, editedText.trim());
+  };
 
   return (
     <>
@@ -137,8 +156,11 @@ const App = () => {
         handleTodoClick={handleTodoClick}
         handleDeleteTodo={handleDeleteTodo}
         editingTodoId={editingTodoId}
-        handleSaveEdit={handleSaveEdit}
+        handleTextChange={handleTextChange}
+        handleKeyPress={handleKeyPress}
+        handleSave={handleSave}
         handleCancelEdit={handleCancelEdit}
+        editedText={editedText}
       />
     </>
   );
