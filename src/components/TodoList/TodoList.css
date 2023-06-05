@@ -1,11 +1,31 @@
 .TodoEditor {
-  width: 600px;
-  display: flex;
-  flex-direction: column;
-  padding: 16px;
-  border: 1px solid $black;
-  border-radius: 4px;
-  margin-bottom: 20px;
+  @media (min-width: 1024px) {
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    border: 1px solid $black;
+    border-radius: 4px;
+  }
+
+  @media (max-width: 1023px) and (min-width: 768px) {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    border: 1px solid $black;
+    border-radius: 4px;
+  }
+
+  @media (max-width: 767px) {
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    border: 1px solid $black;
+    border-radius: 4px;
+    overflow-y: auto;
+  }
 }
 li {
   list-style-type: decimal;

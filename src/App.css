@@ -17,21 +17,18 @@ body {
   padding: 20px;
 }
 
-/* Стили для мобильных устройств */
 @media (max-width: 767px) {
   .container {
     padding: 10px;
   }
 }
 
-/* Стили для планшетов */
 @media (min-width: 768px) and (max-width: 1023px) {
   .container {
     padding: 20px;
   }
 }
 
-/* Стили для настольных компьютеров */
 @media (min-width: 1024px) {
   .container {
     padding: 40px;
@@ -39,10 +36,22 @@ body {
 }
 
 .header {
-  padding: 20px 0;
+  padding: 20px 0px 20px 5px;
   display: flex;
   align-items: center;
   background: #f1f1f1;
+}
+
+@media (max-width: 767px) {
+  .header {
+    padding: 5px 0px 5px 10px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center; /* Смещение вправо */
+    /* justify-content: center; */ /* Выравнивание по центру */
+    background: #f1f1f1;
+  }
 }
 
 .header > div {
@@ -59,6 +68,9 @@ body {
   display: flex;
   margin-left: auto;
   margin-right: 10px;
+  @media (max-width: 767px) {
+    margin-left: 0px;
+  }
 }
 
 .delete-btn {

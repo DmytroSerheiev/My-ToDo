@@ -1,17 +1,20 @@
-/* .Dropdown {
+/* Dropdown.css */
+.Dropdown {
   position: relative;
-  width: 400px;
-  padding: 20px;
-  border: 1px solid black;
-}  */
-
-/* .Dropdown__menu {
-  position: absolute;
+}
+.Dropdown__menu {
   top: 100%;
   left: 0;
-  width: 100%;
-  padding: 20px;
-  text-align: center;
-  background-color: teal;
-  color: white;
-} */
+  max-width: 100%;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  /* overflow: auto; */
+  max-height: 200px;
+}
+
+.Dropdown__toggle {
+  /* Your existing styles for the toggle button */
+}
