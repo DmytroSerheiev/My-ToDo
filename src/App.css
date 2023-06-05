@@ -56,13 +56,13 @@ body {
 }
 
 .header > div {
-  margin-right: 10px;
+  margin-right: 7px;
 }
 
 .buttons-container {
   margin-left: 0px;
   display: flex;
-  gap: 10px;
+  gap: 7px;
 }
 
 .filter {
