@@ -50,7 +50,7 @@ body {
 }
 
 .buttons-container {
-  margin-left: 10px;
+  margin-left: 0px;
   display: flex;
   gap: 10px;
 }
