@@ -45,7 +45,7 @@ body {
 @media (max-width: 767px) {
   .header {
     padding: 5px 0px 5px 10px;
-    display: flex;
+    flex-wrap: wrap;
     flex-wrap: nowrap;
     align-items: center;
     justify-content: center; /* Смещение вправо */
