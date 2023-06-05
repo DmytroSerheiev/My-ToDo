@@ -1,0 +1,84 @@
+/* Общие стили */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-image: linear-gradient(
+      rgba(255, 249, 231, 0.7),
+      rgba(255, 249, 231, 0.7)
+    ),
+    url('./img/bg.png');
+  background-size: cover;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Стили для мобильных устройств */
+@media (max-width: 767px) {
+  .container {
+    padding: 10px;
+  }
+}
+
+/* Стили для планшетов */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .container {
+    padding: 20px;
+  }
+}
+
+/* Стили для настольных компьютеров */
+@media (min-width: 1024px) {
+  .container {
+    padding: 40px;
+  }
+}
+
+.header {
+  padding: 20px 0;
+  display: flex;
+  align-items: center;
+  background: #f1f1f1;
+}
+
+.header > div {
+  margin-right: 10px;
+}
+
+.buttons-container {
+  margin-left: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.filter {
+  display: flex;
+  margin-left: auto;
+  margin-right: 10px;
+}
+
+.delete-btn {
+  padding: 5px;
+  background-color: #ff0000;
+  color: #fff;
+  border-radius: 5px;
+}
+
+.delete-btn.disabled {
+  background-color: #ccc;
+}
+
+.edit-btn {
+  padding: 5px;
+  background-color: #00ff00;
+  color: #fff;
+  border-radius: 5px;
+}
+
+.edit-btn.disabled {
+  background-color: #ccc;
+}

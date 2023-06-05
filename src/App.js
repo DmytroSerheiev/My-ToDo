@@ -8,6 +8,7 @@ import DropdownAddToDo from './components/DropdownAddToDo';
 import TodoList from './components/TodoList';
 import initialTodos from './todos.json';
 import Filter from './components/Filter';
+import './App.css';
 
 import TodoEditor from './components/TodoEditor';
 
@@ -118,35 +119,41 @@ const App = () => {
   };
 
   return (
-    <>
-      <Filter value={filter} onChange={handleFilterChange} />
+    <container>
+      <div className="header">
+        <DropdownAddToDo>
+          <TodoEditor onSubmit={addTodo} />
+        </DropdownAddToDo>
 
-      <button
-        type="button"
-        className={classNames('TodoList__btn', {
-          'TodoList__btn--active': selectedTodos.length > 0,
-        })}
-        onClick={handleDeleteTodo}
-        disabled={selectedTodos.length === 0}
-      >
-        <FontAwesomeIcon icon={faTrashAlt} />
-      </button>
+        <div className="buttons-container">
+          <button
+            type="button"
+            className={classNames('TodoList__btn', {
+              'TodoList__btn--active': selectedTodos.length > 0,
+            })}
+            onClick={handleDeleteTodo}
+            disabled={selectedTodos.length === 0}
+          >
+            <FontAwesomeIcon icon={faTrashAlt} />
+          </button>
 
-      <button
-        type="button"
-        className={classNames('TodoList__btn', {
-          'TodoList__btn--active':
-            selectedTodos.length === 1 && editingTodoId === null,
-        })}
-        onClick={() => handleEditTodo(selectedTodos[0].id)}
-        disabled={selectedTodos.length !== 1 || editingTodoId !== null}
-      >
-        <FontAwesomeIcon icon={faEdit} />
-      </button>
+          <button
+            type="button"
+            className={classNames('TodoList__btn', {
+              'TodoList__btn--active':
+                selectedTodos.length === 1 && editingTodoId === null,
+            })}
+            onClick={() => handleEditTodo(selectedTodos[0].id)}
+            disabled={selectedTodos.length !== 1 || editingTodoId !== null}
+          >
+            <FontAwesomeIcon icon={faEdit} />
+          </button>
+        </div>
 
-      <DropdownAddToDo>
-        <TodoEditor onSubmit={addTodo} />
-      </DropdownAddToDo>
+        <div className="filter">
+          <Filter value={filter} onChange={handleFilterChange} />
+        </div>
+      </div>
 
       <TodoList
         todos={filteredTodos}
@@ -162,7 +169,7 @@ const App = () => {
         handleCancelEdit={handleCancelEdit}
         editedText={editedText}
       />
-    </>
+    </container>
   );
 };
 
