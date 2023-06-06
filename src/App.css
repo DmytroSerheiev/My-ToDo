@@ -95,3 +95,8 @@ body {
 .edit-btn.disabled {
   background-color: #ccc;
 }
+@media (max-width: 767px) {
+  .TodoList__btn {
+    width: 35px;
+  }
+}
