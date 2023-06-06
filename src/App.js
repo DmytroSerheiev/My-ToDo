@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import shortid from 'shortid';
 import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -17,6 +17,22 @@ const App = () => {
   const [filter, setFilter] = useState('');
   const [selectedTodos, setSelectedTodos] = useState([]);
   const [editingTodoId, setEditingTodoId] = useState(null);
+  const appRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = event => {
+      if (appRef.current && !appRef.current.contains(event.target)) {
+        setSelectedTodos([]);
+        setEditingTodoId(null);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
 
   useEffect(() => {
     const storedTodos = localStorage.getItem('todos');
@@ -119,57 +135,59 @@ const App = () => {
   };
 
   return (
-    <container>
-      <div className="header">
-        <DropdownAddToDo>
-          <TodoEditor onSubmit={addTodo} />
-        </DropdownAddToDo>
+    <div ref={appRef} className="container">
+      <container>
+        <div className="header">
+          <DropdownAddToDo>
+            <TodoEditor onSubmit={addTodo} />
+          </DropdownAddToDo>
 
-        <div className="buttons-container">
-          <button
-            type="button"
-            className={classNames('TodoList__btn', {
-              'TodoList__btn--active': selectedTodos.length > 0,
-            })}
-            onClick={handleDeleteTodo}
-            disabled={selectedTodos.length === 0}
-          >
-            <FontAwesomeIcon icon={faTrashAlt} />
-          </button>
+          <div className="buttons-container">
+            <button
+              type="button"
+              className={classNames('TodoList__btn', {
+                'TodoList__btn--active': selectedTodos.length > 0,
+              })}
+              onClick={handleDeleteTodo}
+              disabled={selectedTodos.length === 0}
+            >
+              <FontAwesomeIcon icon={faTrashAlt} />
+            </button>
 
-          <button
-            type="button"
-            className={classNames('TodoList__btn', {
-              'TodoList__btn--active':
-                selectedTodos.length === 1 && editingTodoId === null,
-            })}
-            onClick={() => handleEditTodo(selectedTodos[0].id)}
-            disabled={selectedTodos.length !== 1 || editingTodoId !== null}
-          >
-            <FontAwesomeIcon icon={faEdit} />
-          </button>
+            <button
+              type="button"
+              className={classNames('TodoList__btn', {
+                'TodoList__btn--active':
+                  selectedTodos.length === 1 && editingTodoId === null,
+              })}
+              onClick={() => handleEditTodo(selectedTodos[0].id)}
+              disabled={selectedTodos.length !== 1 || editingTodoId !== null}
+            >
+              <FontAwesomeIcon icon={faEdit} />
+            </button>
+          </div>
+
+          <div className="filter">
+            <Filter value={filter} onChange={handleFilterChange} />
+          </div>
         </div>
 
-        <div className="filter">
-          <Filter value={filter} onChange={handleFilterChange} />
-        </div>
-      </div>
-
-      <TodoList
-        todos={filteredTodos}
-        onDeleteTodo={deleteTodo}
-        onToggleCompleted={toggleCompleted}
-        selectedTodos={selectedTodos}
-        handleTodoClick={handleTodoClick}
-        handleDeleteTodo={handleDeleteTodo}
-        editingTodoId={editingTodoId}
-        handleTextChange={handleTextChange}
-        handleKeyPress={handleKeyPress}
-        handleSave={handleSave}
-        handleCancelEdit={handleCancelEdit}
-        editedText={editedText}
-      />
-    </container>
+        <TodoList
+          todos={filteredTodos}
+          onDeleteTodo={deleteTodo}
+          onToggleCompleted={toggleCompleted}
+          selectedTodos={selectedTodos}
+          handleTodoClick={handleTodoClick}
+          handleDeleteTodo={handleDeleteTodo}
+          editingTodoId={editingTodoId}
+          handleTextChange={handleTextChange}
+          handleKeyPress={handleKeyPress}
+          handleSave={handleSave}
+          handleCancelEdit={handleCancelEdit}
+          editedText={editedText}
+        />
+      </container>
+    </div>
   );
 };
 
