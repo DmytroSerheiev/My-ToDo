@@ -95,6 +95,28 @@ body {
 .edit-btn.disabled {
   background-color: #ccc;
 }
+
+.delete-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+}
+
+.delete-modal p {
+  margin: 0 0 10px;
+}
+
+.delete-modal button {
+  margin-right: 10px;
+}
+
 @media (max-width: 767px) {
   .TodoList__btn {
     width: 35px;

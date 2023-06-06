@@ -3,13 +3,12 @@ import shortid from 'shortid';
 import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons';
+import './App.css';
 
 import DropdownAddToDo from './components/DropdownAddToDo';
 import TodoList from './components/TodoList';
 import initialTodos from './todos.json';
 import Filter from './components/Filter';
-import './App.css';
-
 import TodoEditor from './components/TodoEditor';
 
 const App = () => {
@@ -17,6 +16,7 @@ const App = () => {
   const [filter, setFilter] = useState('');
   const [selectedTodos, setSelectedTodos] = useState([]);
   const [editingTodoId, setEditingTodoId] = useState(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const appRef = useRef(null);
 
   useEffect(() => {
@@ -75,8 +75,17 @@ const App = () => {
   };
 
   const handleDeleteTodo = () => {
+    setShowDeleteModal(true);
+  };
+
+  const handleConfirmDelete = () => {
     deleteTodo(selectedTodos.map(selectedTodo => selectedTodo.id));
     setSelectedTodos([]);
+    setShowDeleteModal(false);
+  };
+
+  const handleCancelDelete = () => {
+    setShowDeleteModal(false);
   };
 
   const handleTodoClick = todo => {
@@ -113,9 +122,11 @@ const App = () => {
     setEditingTodoId(null);
   };
 
-  const filteredTodos = todos.filter(todo =>
-    todo.text.toLowerCase().includes(filter.toLowerCase())
-  );
+  const handleKeyPress = (event, todoId) => {
+    if (event.key === 'Enter') {
+      handleSaveEdit(todoId, editedText);
+    }
+  };
 
   const [editedText, setEditedText] = useState('');
 
@@ -123,16 +134,9 @@ const App = () => {
     setEditedText(event.target.value);
   };
 
-  const handleKeyPress = event => {
-    if (event.key === 'Enter') {
-      event.preventDefault();
-      setEditedText(editedText + '\n');
-    }
-  };
-
-  const handleSave = () => {
-    handleSaveEdit(editingTodoId, editedText.trim());
-  };
+  const filteredTodos = todos.filter(todo =>
+    todo.text.toLowerCase().includes(filter.toLowerCase())
+  );
 
   return (
     <div ref={appRef} className="container">
@@ -182,11 +186,19 @@ const App = () => {
           editingTodoId={editingTodoId}
           handleTextChange={handleTextChange}
           handleKeyPress={handleKeyPress}
-          handleSave={handleSave}
+          handleSave={handleSaveEdit}
           handleCancelEdit={handleCancelEdit}
           editedText={editedText}
         />
       </container>
+
+      {showDeleteModal && (
+        <div className="delete-modal">
+          <p>Удалить?</p>
+          <button onClick={handleConfirmDelete}>Да</button>
+          <button onClick={handleCancelDelete}>Отмена</button>
+        </div>
+      )}
     </div>
   );
 };
