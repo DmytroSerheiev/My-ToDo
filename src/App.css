@@ -40,9 +40,10 @@ body {
   display: flex;
   align-items: center;
   background: #f1f1f1;
-  position: fixed;
+  position: sticky;
   width: 100%;
   z-index: 3;
+  top: 0;
 }
 
 @media (max-width: 767px) {
