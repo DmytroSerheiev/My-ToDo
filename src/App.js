@@ -20,17 +20,20 @@ const App = () => {
   const appRef = useRef(null);
 
   useEffect(() => {
-    const handleClickOutside = event => {
-      if (appRef.current && !appRef.current.contains(event.target)) {
+    const handleMouseDown = event => {
+      const targetIsText =
+        event.target instanceof Node &&
+        event.target.nodeType === Node.TEXT_NODE;
+      if (!targetIsText) {
         setSelectedTodos([]);
         setEditingTodoId(null);
       }
     };
 
-    document.addEventListener('click', handleClickOutside);
+    document.addEventListener('mousedown', handleMouseDown);
 
     return () => {
-      document.removeEventListener('click', handleClickOutside);
+      document.removeEventListener('mousedown', handleMouseDown);
     };
   }, []);
 
