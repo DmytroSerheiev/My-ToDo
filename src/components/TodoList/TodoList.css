@@ -106,6 +106,10 @@ li {
   /* padding: 2px 5px; */
   box-sizing: border-box;
   cursor: pointer;
+  width: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .TodoList__btn--active svg {

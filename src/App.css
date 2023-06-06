@@ -148,7 +148,7 @@ body {
     content: '';
     position: absolute;
     top: 0;
-    right: -10px;
+    right: -35px;
     height: 100%;
     width: 1px;
     background-color: #ccc;
