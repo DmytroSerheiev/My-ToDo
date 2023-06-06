@@ -98,5 +98,8 @@ body {
 @media (max-width: 767px) {
   .TodoList__btn {
     width: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
