@@ -10,7 +10,7 @@ import TodoList from './components/TodoList';
 import initialTodos from './todos.json';
 import Filter from './components/Filter';
 import TodoEditor from './components/TodoEditor';
-import SelectedTodoList from './components/TodoItem/SelectedTodoList'; // Новый компонент для отображения выбранного элемента списка
+import SelectedTodoList from './components/TodoItem/SelectedTodoList';
 
 const App = () => {
   const [todos, setTodos] = useState(initialTodos);
@@ -103,14 +103,14 @@ const App = () => {
       setEditingTodoId(null);
     } else {
       setSelectedTodos([todo]);
-      setEditingTodoId(null); // Reset the editingTodoId when a new todo is selected
+      setEditingTodoId(null);
     }
   };
 
   const handleEditTodo = (todoId, todoText) => {
     setEditingTodoId(todoId);
     setOldText(todoText);
-    setEditedText(todoText); // Устанавливаем значение editedText равным исходному тексту
+    setEditedText(todoText);
   };
 
   const handleSaveEdit = (todoId, newText) => {
@@ -121,13 +121,13 @@ const App = () => {
     );
     setEditingTodoId(null);
     setOldText('');
-    setEditedText(''); // Очищаем значение editedText после сохранения
+    setEditedText('');
   };
 
   const handleCancelEdit = () => {
     setEditingTodoId(null);
     setOldText('');
-    setEditedText(''); // Очищаем значение editedText при отмене редактирования
+    setEditedText('');
   };
 
   const handleKeyPress = (event, todoId) => {
@@ -186,13 +186,13 @@ const App = () => {
           <Filter value={filter} onChange={handleFilterChange} />
         </div>
       </div>
-      <div class="main-container">
-        <div className="selected-todo" style={{ listStyleType: 'none' }}>
-          {/* Показуємо вибраний елемент списку */}
-          {selectedTodos.length > 0 && (
+      <div className="main-container">
+        {selectedTodos.length > 0 && (
+          <div className="selected-todo-desktop">
             <SelectedTodoList selectedTodos={selectedTodos} />
-          )}
-        </div>
+          </div>
+        )}
+
         <div className="sidebar">
           <TodoList
             todos={filteredTodos}
@@ -205,7 +205,7 @@ const App = () => {
             editingTodoId={editingTodoId}
             handleTextChange={handleTextChange}
             handleKeyPress={handleKeyPress}
-            handleSave={handleSaveEdit} // Переименовано handleSaveEdit в handleSave
+            handleSave={handleSaveEdit}
             handleCancelEdit={handleCancelEdit}
             editedText={editedText}
             oldText={oldText}

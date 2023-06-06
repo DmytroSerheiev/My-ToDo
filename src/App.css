@@ -168,3 +168,28 @@ body {
 .selected-todo {
   list-style-type: disc;
 }
+
+@media (max-width: 1023px) {
+  .main-container {
+    flex-direction: column;
+    margin: 20px auto;
+    width: 90%;
+  }
+
+  .selected-todo-desktop {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .main-container {
+    flex-direction: row-reverse;
+    width: 1200px;
+    margin: 40px auto;
+  }
+
+  .selected-todo-desktop {
+    display: block;
+    margin-right: 20px;
+  }
+}
