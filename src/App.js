@@ -176,20 +176,22 @@ const App = () => {
           </div>
         </div>
 
-        <TodoList
-          todos={filteredTodos}
-          onDeleteTodo={deleteTodo}
-          onToggleCompleted={toggleCompleted}
-          selectedTodos={selectedTodos}
-          handleTodoClick={handleTodoClick}
-          handleDeleteTodo={handleDeleteTodo}
-          editingTodoId={editingTodoId}
-          handleTextChange={handleTextChange}
-          handleKeyPress={handleKeyPress}
-          handleSave={handleSaveEdit}
-          handleCancelEdit={handleCancelEdit}
-          editedText={editedText}
-        />
+        <div className="sidebar">
+          <TodoList
+            todos={filteredTodos}
+            onDeleteTodo={deleteTodo}
+            onToggleCompleted={toggleCompleted}
+            selectedTodos={selectedTodos}
+            handleTodoClick={handleTodoClick}
+            handleDeleteTodo={handleDeleteTodo}
+            editingTodoId={editingTodoId}
+            handleTextChange={handleTextChange}
+            handleKeyPress={handleKeyPress}
+            handleSave={handleSaveEdit}
+            handleCancelEdit={handleCancelEdit}
+            editedText={editedText}
+          />
+        </div>
       </container>
 
       {showDeleteModal && (
