@@ -14,32 +14,35 @@ body {
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px;
 }
 
 @media (max-width: 767px) {
   .container {
-    padding: 10px;
+    padding: 0px 1px 1px 1px;
   }
 }
 
 @media (min-width: 768px) and (max-width: 1023px) {
   .container {
-    padding: 20px;
+    padding: 0px 1px 1px 1px;
   }
 }
 
 @media (min-width: 1024px) {
   .container {
-    padding: 40px;
+    padding: 0px 1px 1px 1px;
   }
 }
 
 .header {
   padding: 20px 0px 20px 5px;
+  margin: top;
   display: flex;
   align-items: center;
   background: #f1f1f1;
+  position: fixed;
+  width: 100%;
+  z-index: 3;
 }
 
 @media (max-width: 767px) {
