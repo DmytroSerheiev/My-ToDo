@@ -41,10 +41,13 @@ const TodoList = ({
                 className="TodoList__editInput"
                 value={editedText}
                 onChange={handleTextChange}
-                onKeyDown={handleKeyPress}
+                onKeyDown={event => handleKeyPress(event, id)}
               />
               <div className="TodoList__editButtons">
-                <button className="TodoList__editButton" onClick={handleSave}>
+                <button
+                  className="TodoList__editButton"
+                  onClick={() => handleSave(id, editedText)}
+                >
                   Сохранить
                 </button>
                 <button

@@ -18,6 +18,8 @@ const App = () => {
   const [editingTodoId, setEditingTodoId] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const appRef = useRef(null);
+  const [editedText, setEditedText] = useState('');
+  const [oldText, setOldText] = useState('');
 
   useEffect(() => {
     const handleClickOutside = event => {
@@ -100,13 +102,14 @@ const App = () => {
       setEditingTodoId(null);
     } else {
       setSelectedTodos([todo]);
+      setEditingTodoId(null); // Reset the editingTodoId when a new todo is selected
     }
   };
 
-  const handleEditTodo = todoId => {
-    const selectedTodo = todos.find(todo => todo.id === todoId);
+  const handleEditTodo = (todoId, todoText) => {
     setEditingTodoId(todoId);
-    setEditedText(selectedTodo.text);
+    setOldText(todoText);
+    setEditedText(todoText); // Устанавливаем значение editedText равным исходному тексту
   };
 
   const handleSaveEdit = (todoId, newText) => {
@@ -116,10 +119,14 @@ const App = () => {
       )
     );
     setEditingTodoId(null);
+    setOldText('');
+    setEditedText(''); // Очищаем значение editedText после сохранения
   };
 
   const handleCancelEdit = () => {
     setEditingTodoId(null);
+    setOldText('');
+    setEditedText(''); // Очищаем значение editedText при отмене редактирования
   };
 
   const handleKeyPress = (event, todoId) => {
@@ -127,8 +134,6 @@ const App = () => {
       handleSaveEdit(todoId, editedText);
     }
   };
-
-  const [editedText, setEditedText] = useState('');
 
   const handleTextChange = event => {
     setEditedText(event.target.value);
@@ -140,59 +145,65 @@ const App = () => {
 
   return (
     <div ref={appRef} className="container">
-      <container>
-        <div className="header">
-          <DropdownAddToDo>
-            <TodoEditor onSubmit={addTodo} />
-          </DropdownAddToDo>
-
-          <div className="buttons-container">
-            <button
-              type="button"
-              className={classNames('TodoList__btn', {
-                'TodoList__btn--active': selectedTodos.length > 0,
-              })}
-              onClick={handleDeleteTodo}
-              disabled={selectedTodos.length === 0}
-            >
-              <FontAwesomeIcon icon={faTrashAlt} />
-            </button>
-
-            <button
-              type="button"
-              className={classNames('TodoList__btn', {
-                'TodoList__btn--active':
-                  selectedTodos.length === 1 && editingTodoId === null,
-              })}
-              onClick={() => handleEditTodo(selectedTodos[0].id)}
-              disabled={selectedTodos.length !== 1 || editingTodoId !== null}
-            >
-              <FontAwesomeIcon icon={faEdit} />
-            </button>
-          </div>
-
-          <div className="filter">
-            <Filter value={filter} onChange={handleFilterChange} />
-          </div>
-        </div>
-
-        <div className="sidebar">
-          <TodoList
-            todos={filteredTodos}
-            onDeleteTodo={deleteTodo}
-            onToggleCompleted={toggleCompleted}
-            selectedTodos={selectedTodos}
-            handleTodoClick={handleTodoClick}
-            handleDeleteTodo={handleDeleteTodo}
-            editingTodoId={editingTodoId}
+      <div className="header">
+        <DropdownAddToDo>
+          <TodoEditor
+            onSubmit={addTodo}
             handleTextChange={handleTextChange}
-            handleKeyPress={handleKeyPress}
-            handleSave={handleSaveEdit}
-            handleCancelEdit={handleCancelEdit}
             editedText={editedText}
           />
+        </DropdownAddToDo>
+
+        <div className="buttons-container">
+          <button
+            type="button"
+            className={classNames('TodoList__btn', {
+              'TodoList__btn--active': selectedTodos.length > 0,
+            })}
+            onClick={handleDeleteTodo}
+            disabled={selectedTodos.length === 0}
+          >
+            <FontAwesomeIcon icon={faTrashAlt} />
+          </button>
+
+          <button
+            type="button"
+            className={classNames('TodoList__btn', {
+              'TodoList__btn--active':
+                selectedTodos.length === 1 && editingTodoId === null,
+            })}
+            onClick={() =>
+              handleEditTodo(selectedTodos[0].id, selectedTodos[0].text)
+            }
+            disabled={selectedTodos.length !== 1 || editingTodoId !== null}
+          >
+            <FontAwesomeIcon icon={faEdit} />
+          </button>
         </div>
-      </container>
+
+        <div className="filter">
+          <Filter value={filter} onChange={handleFilterChange} />
+        </div>
+      </div>
+
+      <div className="sidebar">
+        <TodoList
+          todos={filteredTodos}
+          onDeleteTodo={deleteTodo}
+          onToggleCompleted={toggleCompleted}
+          selectedTodos={selectedTodos}
+          handleTodoClick={handleTodoClick}
+          handleDeleteTodo={handleDeleteTodo}
+          handleEditTodo={handleEditTodo}
+          editingTodoId={editingTodoId}
+          handleTextChange={handleTextChange}
+          handleKeyPress={handleKeyPress}
+          handleSave={handleSaveEdit} // Переименовано handleSaveEdit в handleSave
+          handleCancelEdit={handleCancelEdit}
+          editedText={editedText}
+          oldText={oldText}
+        />
+      </div>
 
       {showDeleteModal && (
         <div className="delete-modal">
