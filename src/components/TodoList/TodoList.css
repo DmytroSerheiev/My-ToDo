@@ -124,3 +124,20 @@ li {
   color: #999;
   margin-top: 4px;
 }
+
+.TodoList__text {
+  max-width: 200px; /* Adjust the maximum width as per your preference */
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  overflow: hidden;
+}
+
+.TodoList__editInput {
+  height: 200px;
+  width: 240px;
+}
+.selected-todo {
+  list-style-type: none;
+}

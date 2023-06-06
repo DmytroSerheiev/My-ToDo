@@ -10,6 +10,7 @@ import TodoList from './components/TodoList';
 import initialTodos from './todos.json';
 import Filter from './components/Filter';
 import TodoEditor from './components/TodoEditor';
+import SelectedTodoList from './components/TodoItem/SelectedTodoList'; // Новый компонент для отображения выбранного элемента списка
 
 const App = () => {
   const [todos, setTodos] = useState(initialTodos);
@@ -185,24 +186,31 @@ const App = () => {
           <Filter value={filter} onChange={handleFilterChange} />
         </div>
       </div>
-
-      <div className="sidebar">
-        <TodoList
-          todos={filteredTodos}
-          onDeleteTodo={deleteTodo}
-          onToggleCompleted={toggleCompleted}
-          selectedTodos={selectedTodos}
-          handleTodoClick={handleTodoClick}
-          handleDeleteTodo={handleDeleteTodo}
-          handleEditTodo={handleEditTodo}
-          editingTodoId={editingTodoId}
-          handleTextChange={handleTextChange}
-          handleKeyPress={handleKeyPress}
-          handleSave={handleSaveEdit} // Переименовано handleSaveEdit в handleSave
-          handleCancelEdit={handleCancelEdit}
-          editedText={editedText}
-          oldText={oldText}
-        />
+      <div class="main-container">
+        <div className="selected-todo" style={{ listStyleType: 'none' }}>
+          {/* Показуємо вибраний елемент списку */}
+          {selectedTodos.length > 0 && (
+            <SelectedTodoList selectedTodos={selectedTodos} />
+          )}
+        </div>
+        <div className="sidebar">
+          <TodoList
+            todos={filteredTodos}
+            onDeleteTodo={deleteTodo}
+            onToggleCompleted={toggleCompleted}
+            selectedTodos={selectedTodos}
+            handleTodoClick={handleTodoClick}
+            handleDeleteTodo={handleDeleteTodo}
+            handleEditTodo={handleEditTodo}
+            editingTodoId={editingTodoId}
+            handleTextChange={handleTextChange}
+            handleKeyPress={handleKeyPress}
+            handleSave={handleSaveEdit} // Переименовано handleSaveEdit в handleSave
+            handleCancelEdit={handleCancelEdit}
+            editedText={editedText}
+            oldText={oldText}
+          />
+        </div>
       </div>
 
       {showDeleteModal && (
