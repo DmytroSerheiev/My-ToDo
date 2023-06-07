@@ -125,13 +125,13 @@ li {
   margin-top: 4px;
 }
 
-.TodoList__text {
-  max-width: 200px; /* Adjust the maximum width as per your preference */
-
-  text-overflow: ellipsis;
-  white-space: nowrap;
-
-  overflow: hidden;
+@media (min-width: 768px) {
+  .TodoList__text {
+    max-width: 200px; /* Adjust the maximum width as per your preference */
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
 }
 
 .TodoList__editInput {
