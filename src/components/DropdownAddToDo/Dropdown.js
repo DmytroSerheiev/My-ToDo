@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import "./Dropdown.css";
+import React, { Component } from 'react';
+import './Dropdown.css';
 // import TodoEditor from "../TodoEditor";
 
 class Dropdown extends Component {
@@ -8,7 +8,7 @@ class Dropdown extends Component {
   };
 
   toggle = () => {
-    this.setState((prevState) => ({
+    this.setState(prevState => ({
       visible: !prevState.visible,
     }));
   };
@@ -24,11 +24,11 @@ class Dropdown extends Component {
           className="Dropdown__toggle"
           onClick={this.toggle}
         >
-          {visible ? "❌" : "➕"}
+          {visible ? '❌' : '➕'}
         </button>
 
         {visible && (
-          <div className="Dropdown__menu">Добавь задачю 👇 {children}</div>
+          <div className="Dropdown__menu">Add a to-do list 👇 {children}</div>
         )}
       </div>
     );
