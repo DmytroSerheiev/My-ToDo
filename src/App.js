@@ -215,9 +215,9 @@ const App = () => {
 
       {showDeleteModal && (
         <div className="delete-modal">
-          <p>Удалить?</p>
-          <button onClick={handleConfirmDelete}>Да</button>
-          <button onClick={handleCancelDelete}>Отмена</button>
+          <p>Delete?</p>
+          <button onClick={handleConfirmDelete}>Yes</button>
+          <button onClick={handleCancelDelete}>Cancel</button>
         </div>
       )}
     </div>
