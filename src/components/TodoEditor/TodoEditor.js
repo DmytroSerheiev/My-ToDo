@@ -34,7 +34,7 @@ class TodoEditor extends Component {
           className="TodoEditor__button"
           disabled={isDisabled}
         >
-          Сохранить
+          Save
         </button>
       </form>
     );
