@@ -48,13 +48,13 @@ const TodoList = ({
                   className="TodoList__editButton"
                   onClick={() => handleSave(id, editedText)}
                 >
-                  Сохранить
+                  Save
                 </button>
                 <button
                   className="TodoList__editButton"
                   onClick={handleCancelEdit}
                 >
-                  Отмена
+                  Cancel
                 </button>
               </div>
             </div>
